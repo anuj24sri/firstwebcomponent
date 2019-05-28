@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Web Component</title>
+</head>
+<body>
+
+<h1>Web Component</h1>
+<my-app></my-app>
+</body>
+<script>
+
+const template = document.createElement('template');
+template.innerHTML = `
+<style>
+    :host {
+    display: block;
+    font-family: sans-serif;
+    text-align: center;
+    }
+
+    span {
+    
+    cursor: pointer;
+    }
+
+    ul {
+    list-style: none;
+    padding: 0;
+    }
+</style>
+<h1>My App</h1>
+
+<input type="text" placeholder="Add a new to do"></input>
+<span>&#9997;</span>
+
+<ul id="todos"></ul>
+`;
+
+class MyApp extends HTMLElement {
+    constructor() {
+        super();
+        this._shadowRoot = this.attachShadow({ 'mode': 'open' });
+        this._shadowRoot.appendChild(template.content.cloneNode(true));
+        this.$todoList = this._shadowRoot.querySelector('ul');
+    }
+}
+
+window.customElements.define('my-app', MyApp);
+</script>
+</html>
